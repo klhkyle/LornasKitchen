@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lorna's Kitchen Recipe Template</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="page-container">
+    <div id="content-wrap">
+
+      <div class="header">
+        <a href="index.html"><img src="assets/LKLogo.jpg" alt="Logo"></a>
+      </div>
+        
+        
+      <button class="accordion">Appetizers</button>
+      <div class="panel">
+        <p>Comming Soon!  For now, check out the Desserts!</p>
+      </div>
+
+    <button class="accordion">Soups</button>
+      <div class="panel">
+        <p>Comming Soon!  For now, check out the Desserts!</p>
+      </div>
+
+    <button class="accordion">Salads</button>
+      <div class="panel">
+        <p>Comming Soon!  For now, check out the Desserts!</p>
+      </div>
+    
+    <button class="accordion">Mains</button>
+      <div class="panel">
+        <p>Comming Soon!  For now, check out the Desserts!</p>
+      </div>
+    
+    <button class="accordion">Breads</button>
+      <div class="panel">
+        <p>Comming Soon!  For now, check out the Desserts!</p>
+      </div>
+    
+    <button class="accordion">Desserts</button>
+      <div class="panel">
+        <ul>
+          <li><a href="recipes/cowboyccc.html">Cowboy Chocolate Chip Cookies</a></li>
+          <li><a href="recipes/cowboyccc.html"class="recipes">Brownies</a></li>
+          <li><a href="recipes/cowboyccc.html" class="recipes">Apple Crisp</a></li>
+          <li><a href="recipes/cowboyccc.html" class="recipes">Something Else</a></li>
+        </ul>
+      </div>
+    
+    <button class="accordion">Miscellaneous</button>
+      <div class="panel">
+        <p>Comming Soon!  For now, check out the Desserts!</p>
+      </div>
+
+      </div>
+
+      <div class="footer">
+        <p>&copy Lorna's Kitchen 2022</p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
+
+<!--Javascript for drop down-->
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+          
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+        });
+    }
+</script>
