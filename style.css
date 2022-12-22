@@ -87,6 +87,21 @@ body {
 
   }
 
+  table {
+    border-collapse: collapse;
+  }
+  
+  td, th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #B30B10;
+    color: white;
+  }
+
 
   /* Recipe List accordion: */
   
