@@ -30,12 +30,12 @@ body {
     color: #B30B10;
     font-size: 20px;
     margin-bottom: 20px;
-    text-align: center;
     text-decoration: none;
   }
 
   .recipes, li {
     list-style-type: none;
+    margin-left: -1em;
   }
 
   .recipes-list {
