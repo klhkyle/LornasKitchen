@@ -34,6 +34,10 @@ body {
     text-decoration: none;
   }
 
+  .recipes, li {
+    list-style-type: none;
+  }
+
   .recipes-list {
     color: #B30B10;
     font-size: 2em;
@@ -148,7 +152,6 @@ body {
   .panel a:hover {
     text-decoration: underline;
     color: #B30B10;
-    font-size: 1.2em;
   }
   
   .panel a:active {
