@@ -304,6 +304,12 @@ footer {
     padding: 0.3rem;
     border: 1px solid var(--main-color);
     border-radius: 4px;
+    margin-right: 0.5rem; /* Add this line to create space after the input */
+}
+
+#servings-control span {
+    margin-left: 0.5rem; /* Add this block to create space before the "dozen" text */
+    margin-right: 0.5rem; /* Also add some space after it for consistency */
 }
 
 #servings-control button {

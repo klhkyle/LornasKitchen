@@ -1,5 +1,9 @@
 import { fetchRecipes, fetchRecipeContent } from "./dataFetcher.js";
-import { updateHeaderState } from "./utils.js";
+import {
+    updateHeaderState,
+    formatQuantity,
+    parseComplexAmount,
+} from "./utils.js";
 
 export function showCategoryView() {
     document.getElementById("category-view").style.display = "grid";
@@ -91,6 +95,17 @@ export function showRecipeDetail(recipe) {
                     recipeTitle.textContent = content.title;
                     servingsInput.value = content.servings || 1; // Default to 1 if servings is not specified
 
+                    // Initialize servings unit
+                    const servingsUnit =
+                        document.getElementById("servings-unit");
+                    if (content.servings === 1) {
+                        servingsUnit.textContent = " cake"; // or ' house' for gingerbread house
+                    } else if (content.servings > 1) {
+                        servingsUnit.textContent = " dozen";
+                    } else {
+                        servingsUnit.textContent = ""; // For cases where servings might not be applicable
+                    }
+
                     // Populate ingredients
                     content.ingredients.forEach((ing) => {
                         const li = document.createElement("li");
@@ -180,10 +195,10 @@ function updateServings(originalServings) {
     const ingredientsList = document.getElementById("ingredients-list");
 
     // Update servings unit based on recipe
-    if (originalServings === 1) {
-        servingsUnit.textContent = "cake"; // or 'house' for gingerbread house
-    } else if (originalServings > 1) {
-        servingsUnit.textContent = "dozen";
+    if (newServings === 1) {
+        servingsUnit.textContent = " dozen"; // or ' house' for gingerbread house
+    } else if (newServings > 1) {
+        servingsUnit.textContent = " dozen";
     } else {
         servingsUnit.textContent = ""; // For cases where servings might not be applicable
     }
@@ -195,13 +210,29 @@ function updateServings(originalServings) {
 
         for (let i = 0; i < ingredients.length; i++) {
             const ing = ingredients[i];
-            const originalAmount = parseFloat(ing.dataset.amount);
+            const originalAmount = ing.dataset.amount;
+            const originalUnit = ing.dataset.unit || "";
+            const originalItem =
+                ing.dataset.item ||
+                ing.textContent
+                    .replace(`${originalAmount} ${originalUnit}`, "")
+                    .trim();
 
-            if (!isNaN(originalAmount)) {
-                const unit = ing.dataset.unit || "";
-                const newAmount = (originalAmount * factor).toFixed(2);
-                const itemName = ing.textContent.split(" ").slice(-1)[0];
-                ing.textContent = `${newAmount} ${unit} ${itemName}`.trim();
+            // Store original data if not already stored
+            if (!ing.dataset.item) {
+                ing.dataset.item = originalItem;
+            }
+
+            if (originalAmount) {
+                let newAmount;
+
+                // Parse the original amount
+                const parsedAmount = parseComplexAmount(originalAmount);
+                newAmount = formatQuantity(parsedAmount * factor);
+
+                // Reconstruct the ingredient text, replacing the entire content
+                ing.textContent =
+                    `${newAmount} ${originalUnit} ${originalItem}`.trim();
             }
             // If there's no amount, leave the ingredient as is
         }
