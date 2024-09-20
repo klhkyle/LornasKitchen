@@ -101,7 +101,7 @@ export function showRecipeDetail(recipe) {
                     if (content.servings === 1) {
                         servingsUnit.textContent = " cake"; // or ' house' for gingerbread house
                     } else if (content.servings > 1) {
-                        servingsUnit.textContent = " dozen";
+                        servingsUnit.textContent = " Dozen";
                     } else {
                         servingsUnit.textContent = ""; // For cases where servings might not be applicable
                     }
@@ -196,9 +196,9 @@ function updateServings(originalServings) {
 
     // Update servings unit based on recipe
     if (newServings === 1) {
-        servingsUnit.textContent = " dozen"; // or ' house' for gingerbread house
+        servingsUnit.textContent = " Dozen"; // or ' house' for gingerbread house
     } else if (newServings > 1) {
-        servingsUnit.textContent = " dozen";
+        servingsUnit.textContent = " Dozen";
     } else {
         servingsUnit.textContent = ""; // For cases where servings might not be applicable
     }

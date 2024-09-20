@@ -220,32 +220,6 @@ footer {
     margin-top: auto;
 }
 
-@media (max-width: 768px) {
-    .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .category-button {
-        font-size: 1rem;
-    }
-
-    .large-header .logo {
-        font-size: 2rem;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-    }
-
-    main {
-        padding-top: 80px;
-    }
-
-    body.large-header-active main {
-        padding-top: 120px;
-    }
-}
-
 /* Recipe Detail View Styles */
 #recipe-detail-view {
     max-width: 800px;
@@ -292,6 +266,7 @@ footer {
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 #servings-control label {
@@ -300,27 +275,29 @@ footer {
 }
 
 #servings-control input {
-    width: 50px;
-    padding: 0.3rem;
+    width: 60px;
+    padding: 0.5rem;
     border: 1px solid var(--main-color);
     border-radius: 4px;
-    margin-right: 0.5rem; /* Add this line to create space after the input */
+    margin-right: 0.5rem;
+    font-size: 1rem;
 }
 
 #servings-control span {
-    margin-left: 0.5rem; /* Add this block to create space before the "dozen" text */
-    margin-right: 0.5rem; /* Also add some space after it for consistency */
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 #servings-control button {
     background-color: var(--main-color);
     color: var(--button-color);
     border: none;
-    padding: 0.3rem 0.8rem;
+    padding: 0.5rem 1rem;
     margin-left: 0.5rem;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    font-size: 1rem;
 }
 
 #servings-control button:hover {
@@ -346,6 +323,30 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-button {
+        font-size: 1rem;
+    }
+
+    .large-header .logo {
+        font-size: 2rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding-top: 80px;
+    }
+
+    body.large-header-active main {
+        padding-top: 120px;
+    }
+
     #recipe-detail-view {
         padding: 1rem;
     }
@@ -356,5 +357,39 @@ footer {
 
     #recipe-content h3 {
         font-size: 1.5rem;
+    }
+
+    #servings-control {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    #servings-control label {
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+    }
+
+    #servings-control input {
+        width: 100%;
+        max-width: 200px;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+        text-align: center;
+    }
+
+    #servings-control span {
+        margin: 0.5rem 0;
+    }
+
+    #servings-control button {
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+        margin-left: 0;
+        margin-top: 0.5rem;
+        width: 100%;
+        max-width: 200px;
     }
 }
