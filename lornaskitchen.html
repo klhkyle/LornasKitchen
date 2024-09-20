@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lorna's Kitchen</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header class="large-header">
+            <div id="logo" class="logo">Lorna's Kitchen</div>
+            <div class="search-container">
+                <div class="search-icon">🔍</div>
+                <div class="search-field">
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Search recipes..."
+                    />
+                    <button class="close-search">×</button>
+                </div>
+            </div>
+        </header>
+
+        <main role="main">
+            <div id="category-view" class="category-grid">
+                <button class="category-button">Favourites</button>
+                <button class="category-button">Breads</button>
+                <button class="category-button">Cakes</button>
+                <button class="category-button">Candy</button>
+                <button class="category-button">Cookies</button>
+                <button class="category-button">Desserts</button>
+                <button class="category-button">Main Dishes</button>
+                <button class="category-button">Miscellaneous</button>
+                <button class="category-button">Muffins</button>
+                <button class="category-button">Salads</button>
+                <button class="category-button">Sandwiches</button>
+                <button class="category-button">Soups</button>
+                <button class="category-button">Vegetables</button>
+            </div>
+
+            <div
+                id="recipe-list-view"
+                class="recipe-list"
+                style="display: none"
+            >
+                <button id="back-to-categories" class="back-button">
+                    Back to Categories
+                </button>
+                <h2 id="category-title"></h2>
+                <ul id="recipe-list"></ul>
+            </div>
+
+            <div
+                id="recipe-detail-view"
+                class="recipe-detail"
+                style="display: none"
+            >
+                <button id="back-to-recipes" class="back-button">
+                    Back to Recipes
+                </button>
+                <h2 id="recipe-title"></h2>
+                <div id="recipe-content">
+                    <div id="servings-control">
+                        <label for="servings">Servings:</label>
+                        <input
+                            type="number"
+                            id="servings"
+                            name="servings"
+                            min="1"
+                            value="1"
+                        />
+                        <span id="servings-unit"></span>
+                    </div>
+                    <h3>Ingredients</h3>
+                    <ul id="ingredients-list"></ul>
+                    <h3>Instructions</h3>
+                    <ol id="instructions-list"></ol>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Lorna's Kitchen. All rights reserved.</p>
+        </footer>
+
+        <script type="module" src="js/main.js"></script>
+    </body>
+</html>
