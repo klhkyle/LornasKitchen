@@ -57,6 +57,12 @@ export function showRecipeDetail(recipe) {
     const instructionsList = document.getElementById("instructions-list");
     const servingsInput = document.getElementById("servings");
 
+    // Check if all required elements are present
+    if (!recipeDetailView) {
+        console.error("recipe-detail-view not found");
+        return;
+    }
+
     console.log("DOM elements retrieved:", {
         recipeListView,
         recipeDetailView,
@@ -66,7 +72,7 @@ export function showRecipeDetail(recipe) {
         servingsInput,
     });
 
-    recipeListView.style.display = "none";
+    if (recipeListView) recipeListView.style.display = "none";
     recipeDetailView.style.display = "block";
     window.isLandingPage = false;
     updateHeaderState();
@@ -75,10 +81,29 @@ export function showRecipeDetail(recipe) {
     console.log("View states updated");
 
     // Clear previous content
-    ingredientsList.innerHTML = "";
-    instructionsList.innerHTML = "";
+    recipeDetailView.innerHTML = `
+        <h2 id="recipe-title"></h2>
+        <div id="servings-control">
+            <label for="servings">Servings:</label>
+            <input type="number" id="servings" min="1" value="1">
+            <span id="servings-unit"></span>
+            <button id="update-servings">Update</button>
+        </div>
+        <h3>Ingredients:</h3>
+        <ul id="ingredients-list"></ul>
+        <h3>Instructions:</h3>
+        <ol id="instructions-list"></ol>
+    `;
 
-    console.log("Previous content cleared");
+    // Re-fetch elements after clearing content
+    const updatedRecipeTitle = document.getElementById("recipe-title");
+    const updatedIngredientsList = document.getElementById("ingredients-list");
+    const updatedInstructionsList =
+        document.getElementById("instructions-list");
+    const updatedServingsInput = document.getElementById("servings");
+    const servingsUnit = document.getElementById("servings-unit");
+
+    console.log("Previous content cleared and elements re-fetched");
 
     // Generate filename consistently with fetchRecipes in dataFetcher.js
     const filename = recipe.title.toLowerCase().replace(/[^a-z0-9]+/g, "_");
@@ -92,48 +117,54 @@ export function showRecipeDetail(recipe) {
             if (content) {
                 console.log("Rendering recipe content...");
                 try {
-                    recipeTitle.textContent = content.title;
-                    servingsInput.value = content.servings || 1; // Default to 1 if servings is not specified
+                    if (updatedRecipeTitle)
+                        updatedRecipeTitle.textContent = content.title;
+                    if (updatedServingsInput)
+                        updatedServingsInput.value = content.servings || 1;
 
                     // Initialize servings unit
-                    const servingsUnit =
-                        document.getElementById("servings-unit");
-                    if (content.servings === 1) {
-                        servingsUnit.textContent = " Serving"; // or ' house' for gingerbread house
-                    } else if (content.servings > 1) {
-                        servingsUnit.textContent = " Dozen";
-                    } else {
-                        servingsUnit.textContent = ""; // For cases where servings might not be applicable
+                    if (servingsUnit) {
+                        if (content.servings === 1) {
+                            servingsUnit.textContent = " cake";
+                        } else if (content.servings > 1) {
+                            servingsUnit.textContent = " Dozen";
+                        } else {
+                            servingsUnit.textContent = "";
+                        }
                     }
 
                     // Populate ingredients
-                    content.ingredients.forEach((ing) => {
-                        const li = document.createElement("li");
-                        let ingredientText = "";
+                    if (updatedIngredientsList) {
+                        content.ingredients.forEach((ing) => {
+                            const li = document.createElement("li");
+                            let ingredientText = "";
 
-                        if (ing.amount) {
-                            ingredientText += ing.amount + " ";
-                        }
-                        if (ing.unit) {
-                            ingredientText += ing.unit + " ";
-                        }
-                        ingredientText += ing.item;
+                            if (ing.amount) {
+                                ingredientText += ing.amount + " ";
+                            }
+                            if (ing.unit) {
+                                ingredientText += ing.unit + " ";
+                            }
+                            ingredientText += ing.item;
 
-                        li.textContent = ingredientText.trim();
+                            li.textContent = ingredientText.trim();
 
-                        // Store original values as data attributes
-                        if (ing.amount) li.dataset.amount = ing.amount;
-                        if (ing.unit) li.dataset.unit = ing.unit;
+                            // Store original values as data attributes
+                            if (ing.amount) li.dataset.amount = ing.amount;
+                            if (ing.unit) li.dataset.unit = ing.unit;
 
-                        ingredientsList.appendChild(li);
-                    });
+                            updatedIngredientsList.appendChild(li);
+                        });
+                    }
 
                     // Populate instructions
-                    content.instructions.forEach((step) => {
-                        const li = document.createElement("li");
-                        li.textContent = step; // Remove the index and extra numbering
-                        instructionsList.appendChild(li);
-                    });
+                    if (updatedInstructionsList) {
+                        content.instructions.forEach((step) => {
+                            const li = document.createElement("li");
+                            li.textContent = step;
+                            updatedInstructionsList.appendChild(li);
+                        });
+                    }
 
                     // Add event listener for serving size update
                     const updateServingsButton =
@@ -145,34 +176,12 @@ export function showRecipeDetail(recipe) {
                                 updateServings(content.servings || 1);
                             }
                         );
-                    } else {
-                        console.warn(
-                            "Update servings button not found. Creating one..."
-                        );
-                        const servingsControl =
-                            document.getElementById("servings-control");
-                        if (servingsControl) {
-                            const newButton = document.createElement("button");
-                            newButton.id = "update-servings";
-                            newButton.textContent = "Update";
-                            newButton.addEventListener("click", function () {
-                                updateServings(content.servings || 1);
-                            });
-                            servingsControl.appendChild(newButton);
-                        } else {
-                            console.error("Servings control element not found");
-                        }
                     }
 
                     console.log("Recipe content rendered successfully");
                 } catch (error) {
                     console.error("Error during rendering:", error);
-                    // Fallback: display raw JSON data
-                    recipeDetailView.innerHTML = `<pre>${JSON.stringify(
-                        content,
-                        null,
-                        2
-                    )}</pre>`;
+                    recipeDetailView.innerHTML = `<p>An error occurred while rendering the recipe: ${error.message}</p>`;
                 }
             } else {
                 console.error("Recipe content is null or undefined");
@@ -180,9 +189,8 @@ export function showRecipeDetail(recipe) {
             }
         })
         .catch((error) => {
-            console.error("Error rendering recipe:", error);
-            recipeDetailView.innerHTML =
-                "<p>An error occurred while loading the recipe.</p>";
+            console.error("Error fetching recipe:", error);
+            recipeDetailView.innerHTML = `<p>An error occurred while loading the recipe: ${error.message}</p>`;
         });
 
     console.log("Exiting showRecipeDetail function");
