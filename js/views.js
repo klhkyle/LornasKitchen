@@ -99,7 +99,7 @@ export function showRecipeDetail(recipe) {
                     const servingsUnit =
                         document.getElementById("servings-unit");
                     if (content.servings === 1) {
-                        servingsUnit.textContent = " cake"; // or ' house' for gingerbread house
+                        servingsUnit.textContent = " Serving"; // or ' house' for gingerbread house
                     } else if (content.servings > 1) {
                         servingsUnit.textContent = " Dozen";
                     } else {
